@@ -1,18 +1,42 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export default function Users() {
-  const [users, setUsers] = useState([]);
+function Users({ users }) {
+  //   const [users, setUsers] = useState([]);
 
-  const fetchUsers = async () => {
-    const response = await axios.get(
-      'https://jsonplaceholder.typicode.com/users'
-    );
+  //   const fetchUsers = async () => {
+  //     const response = await axios.get(
+  //       'https://jsonplaceholder.typicode.com/users'
+  //     );
 
-    const { data } = response;
+  //     const { data } = response;
 
-    setUsers(data);
-  };
+  //     setUsers(data);
+  //   };
 
-  return <h1>Teste de Rota</h1>;
+  //   console.log(users);
+
+  //   useEffect(() => fetchUsers(), []);
+
+  return (
+    <div>
+      {users.map((user, index) => (
+        <div key={index}>{user.name}</div>
+      ))}
+    </div>
+  );
 }
+
+export async function getStaticProps(context) {
+  const response = await axios.get(
+    'https://jsonplaceholder.typicode.com/users'
+  );
+
+  const { data } = response;
+
+  return {
+    props: { users: data }, // will be passed to the page component as props
+  };
+}
+
+export default Users;
