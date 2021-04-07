@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Link from 'next/link';
 
 function Users({ users }) {
   //   const [users, setUsers] = useState([]);
@@ -21,7 +22,11 @@ function Users({ users }) {
   return (
     <div>
       {users.map((user, index) => (
-        <div key={index}>{user.name}</div>
+        <div key={index}>
+          <Link href="/profile/[id]" as={`/profile/${user.id}`}>
+            <a>{user.name}</a>
+          </Link>
+        </div>
       ))}
     </div>
   );
