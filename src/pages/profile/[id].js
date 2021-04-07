@@ -1,8 +1,14 @@
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 
 function Profile({ user = {} }) {
-  //   const { query } = useRouter();
+  const router = useRouter();
+
+  console.log('Fallback: ', router.isFallback);
+
+  if (router.isFallback) {
+    return <h5>Carregando...</h5>;
+  }
 
   return (
     <div>
@@ -21,6 +27,8 @@ export async function getStaticProps(context) {
 
   const user = response.data[0];
 
+  await new Promise(res => setTimeout(res, 4000));
+
   return {
     props: { user },
   };
@@ -31,7 +39,7 @@ export async function getStaticPaths() {
     'https://jsonplaceholder.typicode.com/users'
   );
 
-  const users = response.data;
+  const users = response.data.slice(0, 5);
 
   const paths = users.map(({ id }) => {
     return {
