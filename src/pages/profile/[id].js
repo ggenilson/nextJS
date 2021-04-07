@@ -27,10 +27,10 @@ export async function getStaticProps(context) {
 
   const user = response.data[0];
 
-  await new Promise(res => setTimeout(res, 4000));
+  //   await new Promise(res => setTimeout(res, 4000));
 
   return {
-    props: { user },
+    props: { user, revalidate: 10 },
   };
 }
 
