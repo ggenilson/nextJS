@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from 'next'
 import axios from 'axios';
 import { User } from '../../../api/User';
 
@@ -55,7 +55,7 @@ export const getStaticProps: GetStaticProps<UserProps> = async (context) => {
 //   };
 // }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async (context) => {
   const response = await axios.get(
     'https://jsonplaceholder.typicode.com/users'
   );
