@@ -2,7 +2,17 @@
 import axios from 'axios';
 import Link from 'next/link';
 
-function Users({ users }) {
+export interface User {
+  id: number;
+  name: string;
+  username: string;
+}
+
+export interface UserProps {
+  users: User[] | undefined;
+}
+
+function Users({ users } : UserProps) {
   //   const [users, setUsers] = useState([]);
 
   //   const fetchUsers = async () => {
@@ -24,7 +34,7 @@ function Users({ users }) {
       {users.map((user, index) => (
         <div key={index}>
           <Link href="/profile/[id]" as={`/profile/${user.id}`}>
-            <a>{user.name}</a>
+            <a>{user}</a>
           </Link>
         </div>
       ))}
