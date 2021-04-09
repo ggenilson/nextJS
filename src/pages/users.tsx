@@ -1,12 +1,7 @@
 // import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-
-export interface User {
-  id: number;
-  name: string;
-  username: string;
-}
+import { User } from '../../api/User';
 
 export interface UserProps {
   users: User[] | undefined;
@@ -34,7 +29,7 @@ function Users({ users } : UserProps) {
       {users.map((user, index) => (
         <div key={index}>
           <Link href="/profile/[id]" as={`/profile/${user.id}`}>
-            <a>{user}</a>
+            <a>{user.name}</a>
           </Link>
         </div>
       ))}

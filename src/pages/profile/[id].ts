@@ -1,7 +1,12 @@
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { User } from '../../../api/User';
 
-function Profile({ user = {} }) {
+export interface UserProps {
+  user: User[] | undefined;
+}
+
+function Profile({ user }: UserProps) {
   const router = useRouter();
 
   console.log('Fallback: ', router.isFallback);
