@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router';
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import axios from 'axios';
 import { User } from '../../../api/User';
 
-export interface UserProps {
-  user: User[] | undefined;
+export type UserProps = {
+  user?: User | null;
 }
 
-function Profile({ user }: UserProps) {
+function Profile({ user }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
 
   console.log('Fallback: ', router.isFallback);
@@ -24,7 +25,7 @@ function Profile({ user }: UserProps) {
   );
 }
 
-export async function getStaticProps(context) {
+export const getStaticProps: GetStaticProps<UserProps> = async (context) => {
   const response = await axios.get(
     'https://jsonplaceholder.typicode.com/users',
     { params: { id: context.params.id } }
@@ -38,6 +39,21 @@ export async function getStaticProps(context) {
     props: { user, revalidate: 10 },
   };
 }
+
+// export async function getStaticProps(context) {
+//   const response = await axios.get(
+//     'https://jsonplaceholder.typicode.com/users',
+//     { params: { id: context.params.id } }
+//   );
+
+//   const user = response.data[0];
+
+//   //   await new Promise(res => setTimeout(res, 4000));
+
+//   return {
+//     props: { user, revalidate: 10 },
+//   };
+// }
 
 export async function getStaticPaths() {
   const response = await axios.get(
